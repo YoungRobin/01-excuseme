@@ -1,46 +1,75 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+var excuses = [
+  "I can't swim.",
+  "I cancelled my credit card.",
+  "I don't have any snowpants.",
+  "I get migraines when I do that.",
+  "I had a really bad dream about that once.",
+  "I have to go to the DMV.",
+  "I left it in my Uber.",
+  "I need to take my dog to the vet.",
+  "I need to wash my car.",
+  "I need to wash my cat.",
+  "I need to wash my hair.",
+  "I sprained my ankle.",
+  "I'm gluten free.",
+  "I'm having an art installation.",
+  "I'm hungry.",
+  "I'm pregnant.",
+  "I'm tired.",
+  "I'm waiting for the repairman.",
+  "I've got a deadline coming up at work.",
+  "I've got a family thing.",
+  "It makes me break out in hives.",
+  "It's raining outside.",
+  "My in-laws are in town.",
+  "My internet is down.",
+  "My spoon is too big."
+];
+
+// From: https://github.com/lodash/lodash/blob/master/shuffle.js
+function shuffle(array) {
+  var length = array == null ? 0 : array.length;
+  if (!length) { return []; }
+
+  var index = -1;
+  var lastIndex = length - 1;
+  var result = array;
+  while (++index < length) {
+    var rand = index + Math.floor(Math.random() * (lastIndex - index + 1));
+    var value = result[rand];
+    result[rand] = result[index];
+    result[index] = value;
+  }
+  return result
+}
+
 var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+  init: function () {
+    var evt = this.render.bind(this);
+    document.addEventListener('click', evt, false);
+    document.addEventListener('deviceready', evt, false);
+    document.addEventListener('DOMContentLoaded', evt, false);
+    this.reset();
+  },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
+  reset: function () {
+    excuses = shuffle(excuses);
+    excuses.push(false);
+  },
 
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+  pick: function () {
+    var excuse = excuses.splice(0, 1)[0];
+    if (!excuse) {
+      this.reset();
+      excuse = excuses.splice(0, 1)[0];
     }
+    excuses.push(excuse);
+    return excuse;
+  },
+
+  render: function () {
+    document.getElementById('app').innerText = this.pick();
+  }
 };
 
-app.initialize();
+app.init();
