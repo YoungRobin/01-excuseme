@@ -38,3 +38,11 @@ captures/
 
 # Keystore files
 *.jks
+
+# Cordova
+hooks/
+platforms/
+plugins/
+
+# Partial Assets
+assets/_dev
