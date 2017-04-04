@@ -23,7 +23,15 @@ var excuses = [
   "It's raining outside.",
   "My in-laws are in town.",
   "My internet is down.",
-  "My spoon is too big."
+  "My spoon is too big.",
+  "Mercurcy is in retrograde, but I don't believe in astrology.",
+  "I wish I could, but I don't want to.",
+  "It has small parts and I'm allergic to choking hazards.",
+  "Today's my turn to clip my grandfather's toenails.",
+  "I didn't get out of bed this morning to do that sort of thing.",
+  "My mother wouldn't approve.",
+  "The color is offensive.",
+  "Thousands of men and women have died protecting my freedom to not do that."
 ];
 
 // From: https://github.com/lodash/lodash/blob/master/shuffle.js
